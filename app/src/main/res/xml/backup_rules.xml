@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file defines the backup rules for devices running below Android 12 (API 31).
+It controls what is included in Google's Auto Backup service.
+
+Similar to the modern data_extraction_rules.xml, we will explicitly exclude
+the database and preferences to ensure user data is not automatically sent to the cloud.
+-->
+<full-backup-content xmlns:tools="http://schemas.android.com/tools">
+    <!-- Exclude the Room database from Auto Backup. -->
+    <exclude domain="database" path="kaikanakku_database.db" />
+
+    <!-- Exclude the DataStore preferences file from Auto Backup. -->
+    <exclude domain="datastore" path="kaikanakku_settings.preferences_pb"
+        tools:ignore="FullBackupContent" />
+</full-backup-content>

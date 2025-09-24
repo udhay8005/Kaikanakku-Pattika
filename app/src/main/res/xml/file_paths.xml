@@ -1,0 +1,14 @@
+<!--
+This configuration is essential for securely sharing files from the app's private
+storage with other applications. It is used by the FileProvider.
+
+The <cache-path> tag specifies that we are allowing access to a subdirectory
+named "exports" within our app's dedicated cache directory. This is the recommended
+approach for sharing temporary files like the exported CSV, as the system can
+clear the cache to free up space.
+-->
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <cache-path
+        name="shared_csv_exports"
+        path="exports/" />
+</paths>

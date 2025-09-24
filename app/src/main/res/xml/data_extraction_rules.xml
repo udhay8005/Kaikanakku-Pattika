@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file defines the rules for backing up and restoring app data on devices
+running Android 12 (API 31) and higher. It provides granular control over what
+data is included in cloud backups and device-to-device transfers.
+
+For this offline-first application, we will exclude the Room database and
+DataStore preferences from cloud backup by default to respect user privacy and
+prevent potential data conflicts. The user can export their history manually.
+-->
+<data-extraction-rules xmlns:tools="http://schemas.android.com/tools">
+    <cloud-backup>
+        <!-- Exclude the Room database from cloud backup. -->
+        <exclude domain="database" path="kaikanakku_database.db" />
+        <!-- Exclude user settings from cloud backup. -->
+        <exclude domain="datastore" path="kaikanakku_settings.preferences_pb"
+            tools:ignore="FullBackupContent" />
+    </cloud-backup>
+    <device-transfer>
+        <!-- For device-to-device transfers, we include all data to provide a seamless setup experience. -->
+        <include domain="database" path="."/>
+        <include domain="datastore" path="."
+            tools:ignore="FullBackupContent" />
+    </device-transfer>
+</data-extraction-rules>

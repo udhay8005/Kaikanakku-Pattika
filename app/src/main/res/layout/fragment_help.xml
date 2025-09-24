@@ -1,0 +1,19 @@
+<!-- A simple layout for displaying help text. A ScrollView ensures all content is -->
+<!-- accessible, and padding makes the text highly readable. -->
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="in.udhaya.kaikanakku.ui.help.HelpFragment">
+
+    <TextView
+        android:id="@+id/text_view_help_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:lineSpacingExtra="4dp"
+        android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+        android:text="@string/help_content" />
+
+</ScrollView>

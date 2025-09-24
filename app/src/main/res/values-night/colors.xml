@@ -1,0 +1,29 @@
+<!--
+This file defines the color palette for the app's dark theme.
+These colors are chosen to provide excellent contrast and readability,
+fixing the visibility issues from the original theme.
+-->
+<resources>
+    <!-- Primary Theme Colors (Lighter Teal for Dark Mode) -->
+    <color name="primary">#4DB6AC</color>
+    <color name="onPrimary">#000000</color>
+    <color name="primaryContainer">#004D40</color>
+    <color name="onPrimaryContainer">#B2DFDB</color>
+
+    <!-- Secondary/Accent Colors (Lighter Deep Orange for Dark Mode) -->
+    <color name="secondary">#FF8A65</color>
+    <color name="onSecondary">#000000</color>
+    <color name="secondaryContainer">#BF360C</color>
+    <color name="onSecondaryContainer">#FFCCBC</color>
+
+    <!-- Neutral Surface and Background Colors for Dark Mode -->
+    <color name="background">#121212</color>
+    <color name="onBackground">#E0E0E0</color>
+    <color name="surface">#1E1E1E</color>
+    <color name="onSurface">#FFFFFF</color>
+    <color name="surfaceVariant">#303030</color>
+    <color name="onSurfaceVariant">#BDBDBD</color>
+
+    <!-- Special Highlight Color for UI feedback in Dark Mode -->
+    <color name="item_highlight">#3380CBC4</color> <!-- Light Teal with alpha transparency -->
+</resources>

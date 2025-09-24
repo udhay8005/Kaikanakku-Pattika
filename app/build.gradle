@@ -1,0 +1,72 @@
+plugins {
+    alias(libs.plugins.android.application)
+}
+
+android {
+    // Updated namespace as requested, using the correct assignment syntax.
+    namespace = 'in.udhaya.kaikanakku'
+    compileSdk = 35
+
+    defaultConfig {
+        // Updated applicationId to match the new package name.
+        applicationId = "in.udhaya.kaikanakku"
+        minSdk = 24
+        // Targeting Android 15 compatibility.
+        targetSdk = 34
+        versionCode = 1
+        versionName = "1.0"
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled = false
+            proguardFiles(getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro')
+        }
+    }
+    compileOptions {
+        // Using Java 17, which is a modern and stable version.
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+}
+
+dependencies {
+    // Core UI and App Compatibility
+    implementation libs.androidx.appcompat
+    implementation libs.google.material
+    implementation libs.androidx.constraintlayout
+    implementation libs.androidx.preference
+
+
+    // Navigation Component
+    implementation libs.androidx.navigation.fragment
+    implementation libs.androidx.navigation.ui
+
+    // Room Database
+    implementation libs.androidx.room.runtime
+    annotationProcessor libs.androidx.room.compiler
+    implementation libs.androidx.room.rxjava3
+
+    // WorkManager for Background Tasks
+    implementation libs.androidx.work.runtime
+    implementation libs.androidx.work.rxjava3
+
+    // Preferences DataStore
+    implementation libs.androidx.datastore.preferences
+    implementation libs.androidx.datastore.preferences.rxjava3
+
+    // RxJava for Asynchronous Operations
+    implementation libs.reactivex.rxjava3.android
+    implementation libs.reactivex.rxjava3.rxjava
+
+    // Lifecycle Components (for ViewModel and LiveData)
+    implementation libs.androidx.lifecycle.reactivestreams
+
+    // Testing
+    testImplementation libs.junit
+    androidTestImplementation libs.androidx.test.ext.junit
+    androidTestImplementation libs.androidx.test.espresso.core
+    androidTestImplementation libs.androidx.room.testing
+}

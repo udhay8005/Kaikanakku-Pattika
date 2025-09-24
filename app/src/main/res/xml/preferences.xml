@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        app:title="@string/settings_category_general">
+
+        <ListPreference
+            app:key="language"
+            app:title="@string/settings_language_title"
+            app:summary="@string/settings_language_summary"
+            app:entries="@array/language_entries"
+            app:entryValues="@array/language_values"
+            app:defaultValue="en"
+            app:useSimpleSummaryProvider="true" />
+
+        <SwitchPreferenceCompat
+            app:key="default_mode"
+            app:title="@string/settings_default_mode_title"
+            app:summaryOn="@string/settings_default_mode_summary_kol_to_cm"
+            app:summaryOff="@string/settings_default_mode_summary_cm_to_kol"
+            app:defaultValue="false" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:title="@string/settings_category_conversion">
+
+        <SwitchPreferenceCompat
+            app:key="precision_mode"
+            app:title="@string/settings_precision_title"
+            app:summary="@string/settings_precision_summary"
+            app:defaultValue="true" />
+
+        <ListPreference
+            app:key="rounding_mode"
+            app:title="@string/settings_rounding_title"
+            app:summary="@string/settings_rounding_summary"
+            app:entries="@array/rounding_mode_entries"
+            app:entryValues="@array/rounding_mode_values"
+            app:defaultValue="round"
+            app:dependency="precision_mode"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:title="@string/settings_category_data">
+
+        <SeekBarPreference
+            app:key="auto_delete_days"
+            app:title="@string/settings_auto_delete_title"
+            android:defaultValue="30"
+            android:max="90"
+            app:min="7"
+            app:showSeekBarValue="true"
+            app:updatesContinuously="true" />
+
+
+        <Preference
+            app:key="reset_settings"
+            app:title="@string/settings_reset_title"
+            app:summary="@string/settings_reset_summary" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

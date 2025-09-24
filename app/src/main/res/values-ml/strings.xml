@@ -1,0 +1,90 @@
+<resources>
+    <string name="app_name">കൈക്കണക്ക് പട്ടിക</string>
+
+    <string name="title_history">ചരിത്രം</string>
+    <string name="title_calculator">യൂണിറ്റ് കാൽക്കുലേറ്റർ</string>
+    <string name="title_settings">ക്രമീകരണങ്ങൾ</string>
+    <string name="title_help">സഹായം</string>
+    <string name="title_about">വിവരം</string>
+    <string name="recent_history_title">സമീപകാല ചരിത്രം</string>
+    <string name="recommendations_title">ദ്രുത പരിവർത്തനങ്ങൾ</string>
+
+    <string name="mode_cm_to_kol">സെ.മീ → കോൽ</string>
+    <string name="mode_kol_to_cm">കോൽ → സെ.മീ</string>
+    <string name="hint_centimeters">സെന്റിമീറ്റർ (cm)</string>
+    <string name="unit_kol">കോൽ</string>
+    <string name="unit_viral">വിരൽ</string>
+    <string name="unit_cm">സെ.മീ</string>
+    <string name="button_convert">മാറ്റുക</string>
+    <string name="label_result">ഫലം</string>
+
+    <string name="label_value_a">മൂല്യം A</string>
+    <string name="label_value_b">മൂല്യം B</string>
+    <string name="button_add">കൂട്ടുക</string>
+    <string name="button_subtract">കുറയ്ക്കുക</string>
+
+    <string name="empty_history_message">ചരിത്രം ലഭ്യമല്ല</string>
+    <string name="empty_history_prompt">നിങ്ങളുടെ പരിവർത്തനങ്ങൾ ഇവിടെ ദൃശ്യമാകും.</string>
+    <string name="action_search">തിരയുക</string>
+    <string name="action_sort">ക്രമീകരിക്കുക</string>
+    <string name="sort_by_date">തീയതി അനുസരിച്ച്</string>
+    <string name="sort_by_size_asc">വലിപ്പം (ചെറുത് ആദ്യം)</string>
+    <string name="sort_by_size_desc">വലിപ്പം (വലുത് ആദ്യം)</string>
+    <string name="action_export_csv">CSV-ലേക്ക് മാറ്റുക</string>
+    <string name="action_clear_all">ചരിത്രം മുഴുവൻ മായ്ക്കുക</string>
+    <string name="action_show_favorites">പ്രിയപ്പെട്ടവ കാണിക്കുക</string>
+    <string name="dialog_clear_history_title">ചരിത്രം മായ്ക്കണോ?</string>
+    <string name="dialog_clear_history_message">എല്ലാ എൻട്രികളും ശാശ്വതമായി ഇല്ലാതാക്കാൻ നിങ്ങൾ ആഗ്രഹിക്കുന്നുണ്ടോ? ഇത് പുനഃസ്ഥാപിക്കാൻ കഴിയില്ല.</string>
+    <string name="undo">പൂർവാവസ്ഥയിലാക്കുക</string>
+    <string name="entry_deleted">എൻട്രി ഇല്ലാതാക്കി</string>
+    <string name="result_copied">ഫലം ക്ലിപ്പ്ബോർഡിലേക്ക് പകർത്തി</string>
+
+    <string name="settings_category_general">പൊതുവായത്</string>
+    <string name="settings_language_title">ഭാഷ</string>
+    <string name="settings_language_summary">ആപ്പിന്റെ പ്രദർശന ഭാഷ മാറ്റുക</string>
+    <string name="settings_default_mode_title">സ്ഥിരസ്ഥിതി പരിവർത്തന മോഡ്</string>
+    <string name="settings_default_mode_summary_cm_to_kol">ആപ്പ് സെ.മീ → കോൽ മോഡിൽ ആരംഭിക്കുന്നു</string>
+    <string name="settings_default_mode_summary_kol_to_cm">ആപ്പ് കോൽ → സെ.മീ മോഡിൽ ആരംഭിക്കുന്നു</string>
+    <string name="settings_category_conversion">പരിവർത്തനം</string>
+    <string name="settings_precision_title">പ്രിസിഷൻ മോഡ്</string>
+    <string name="settings_precision_summary">സെന്റിമീറ്റർ ശിഷ്ടങ്ങൾക്ക് ദശാംശ മൂല്യങ്ങൾ അനുവദിക്കുക</string>
+    <string name="settings_rounding_title">റൗണ്ടിംഗ് മോഡ്</string>
+    <string name="settings_rounding_summary">പ്രിസിഷൻ ഓഫായിരിക്കുമ്പോൾ ദശാംശങ്ങൾ എങ്ങനെ കൈകാര്യം ചെയ്യാം</string>
+    <string name="settings_category_data">ഡാറ്റ മാനേജ്മെന്റ്</string>
+    <string name="settings_auto_delete_title">പഴയ എൻട്രികൾ സ്വയം ഇല്ലാതാക്കുക</string>
+    <string name="settings_auto_delete_summary">%d ദിവസത്തിൽ കൂടുതൽ പഴക്കമുള്ള എൻട്രികൾ സ്വയമേവ നീക്കംചെയ്യുക</string>
+    <string name="settings_auto_delete_disabled">പ്രവർത്തനരഹിതമാക്കി</string>
+    <string name="settings_reset_title">ഡിഫോൾട്ടായി പുനഃസ്ഥാപിക്കുക</string>
+    <string name="settings_reset_summary">എല്ലാ ക്രമീകരണങ്ങളും പഴയ അവസ്ഥയിലേക്ക് പുനഃസ്ഥാപിക്കുക</string>
+
+    <string name="developed_by">ഉദയചന്ദ്ര വികസിപ്പിച്ചത്</string>
+    <string name="about_version_format">പതിപ്പ് %s</string>
+    <string name="version_unknown">പതിപ്പ് അജ്ഞാതമാണ്</string>
+
+    <string name="help_content"><b>കൈക്കണക്ക് പട്ടികയിലേക്ക് സ്വാഗതം!</b>\n\nഈ ആപ്പ് ആധുനിക മെട്രിക് സിസ്റ്റവും (സെന്റിമീറ്റർ) കേരളത്തിന്റെ പരമ്പരാഗത അളവെടുപ്പ് രീതിയായ \'കോൽ\', \'വിരൽ\' എന്നിവയും തമ്മിൽ പരിവർത്തനം ചെയ്യാൻ സഹായിക്കുന്നു.\n\n<b>സവിശേഷതകൾ:</b>\n\n<b>കൺവെർട്ടർ:</b> നിങ്ങളുടെ പരിവർത്തന ദിശ തിരഞ്ഞെടുക്കാൻ മുകളിലുള്ള സ്വിച്ച് ഉപയോഗിക്കുക. ഒരു മൂല്യം നൽകി \'മാറ്റുക\' അമർത്തുക. എല്ലാ പരിവർത്തനങ്ങളും സ്വയമേവ സേവ് ചെയ്യപ്പെടും.\n\n<b>കാൽക്കുലേറ്റർ:</b> പരമ്പരാഗത സിസ്റ്റത്തിൽ രണ്ട് വ്യത്യസ്ത അളവുകൾ കൂട്ടുകയോ കുറയ്ക്കുകയോ ചെയ്യുക. എല്ലാ കണക്കുകൂട്ടലുകളും സ്വയമേവ സേവ് ചെയ്യപ്പെടും.\n\n<b>ചരിത്രം:</b> ഓരോ പരിവർത്തനവും കണക്കുകൂട്ടലും സേവ് ചെയ്യപ്പെടുന്നു. നിങ്ങൾക്ക് എൻട്രികൾ തിരയാനും, തരംതിരിക്കാനും, പ്രിയപ്പെട്ടതാക്കാനും, ഇല്ലാതാക്കാനും കഴിയും. ഒരു എൻട്രി ഇല്ലാതാക്കാൻ അതിനെ സ്വൈപ്പ് ചെയ്യുക. ഫലം പകർത്താൻ ഒരു എൻട്രിയിൽ ടാപ്പ് ചെയ്യുക. ഒരു ചരിത്ര ഇനം കൺവെർട്ടറിലേക്ക് തിരികെ അയയ്ക്കാൻ \'പുനരുപയോഗിക്കുക\' ബട്ടൺ ഉപയോഗിക്കുക.\n\n<b>ക്രമീകരണങ്ങൾ:</b> കൃത്യത, റൗണ്ടിംഗ്, ഡാറ്റ മാനേജ്മെന്റ് പോലുള്ള ആപ്പിന്റെ സ്വഭാവം ഇഷ്ടാനുസൃതമാക്കുക.</string>
+
+
+    <string name="content_desc_favorite">പ്രിയപ്പെട്ടതായി അടയാളപ്പെടുത്തുക</string>
+    <string name="content_desc_reuse">ഈ മൂല്യം കൺവെർട്ടറിൽ വീണ്ടും ഉപയോഗിക്കുക</string>
+
+    <string name="error_negative_input">നൽകിയ മൂല്യം നെഗറ്റീവ് ആകാൻ പാടില്ല.</string>
+    <string name="error_conversion_failed">പരിവർത്തന സമയത്ത് ഒരു പിശക് സംഭവിച്ചു.</string>
+    <string name="status_saved_to_history">ഫലം ചരിത്രത്തിലേക്ക് സംരക്ഷിച്ചു.</string>
+    <string name="error_b_greater_than_a">ഫലം നെഗറ്റീവ് ആകാൻ പാടില്ല (മൂല്യം B, മൂല്യം A-യെക്കാൾ വലുതാണ്).</string>
+    <string name="error_invalid_number_format">അസാധുവായ നമ്പർ ഫോർമാറ്റ് നൽകി.</string>
+    <string name="error_invalid_viral_input">വിരൽ മൂല്യം 23-ൽ കൂടരുത്.</string>
+    <string name="error_invalid_kol_cm_input">കോൽ പരിവർത്തനത്തിന് സിഎം മൂല്യം 3-ൽ കുറവായിരിക്കണം.</string>
+    <string name="history_empty_for_export">ചരിത്രം ശൂന്യമാണ്, എക്സ്പോർട്ട് ചെയ്യാൻ ഒന്നുമില്ല.</string>
+    <string name="history_exported_successfully">ചരിത്രം വിജയകരമായി എക്സ്പോർട്ട് ചെയ്തു.</string>
+    <string name="share_csv_title">CSV ഫയൽ പങ്കിടുക</string>
+    <string name="error_exporting_csv">CSV എക്സ്പോർട്ട് ചെയ്യുന്നതിൽ പിശക്.</string>
+    <string name="action_share">പങ്കിടുക</string>
+    <string name="clipboard_label">കൈക്കണക്ക് ഫലം</string>
+    <string name="error_no_result_to_save">സേവ് ചെയ്യാൻ ഫലമൊന്നുമില്ല.</string>
+
+    <string name="settings_reset_dialog_title">ക്രമീകരണങ്ങൾ പുനഃസജ്ജമാക്കണോ?</string>
+    <string name="settings_reset_dialog_message">എല്ലാ ക്രമീകരണങ്ങളും പഴയ അവസ്ഥയിലേക്ക് മാറ്റണോ? ഈ പ്രവൃത്തി പിന്നീട് മാറ്റാൻ കഴിയില്ല.</string>
+    <string name="settings_reset_dialog_positive">പുനഃസജ്ജമാക്കുക</string>
+    <string name="cancel">റദ്ദാക്കുക</string>
+
+</resources>

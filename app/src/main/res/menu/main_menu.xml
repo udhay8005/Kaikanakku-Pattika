@@ -1,0 +1,33 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/historyFragment"
+        android:icon="@drawable/ic_history"
+        android:title="@string/title_history"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/calculatorFragment"
+        android:icon="@drawable/ic_calculator"
+        android:title="@string/title_calculator"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/settingsFragment"
+        android:title="@string/title_settings"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/helpFragment"
+        android:title="@string/title_help"
+        android:orderInCategory="101"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/aboutFragment"
+        android:title="@string/title_about"
+        android:orderInCategory="102"
+        app:showAsAction="never" />
+</menu>

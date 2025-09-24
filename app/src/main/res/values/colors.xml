@@ -1,0 +1,32 @@
+<!--
+This file defines the core color palette for the application's light theme,
+following the Material 3 color role system. These colors are referenced by the theme.
+-->
+<resources>
+    <!-- Primary Theme Colors (Teal/Green) -->
+    <color name="primary">#00796B</color>
+    <color name="onPrimary">#FFFFFF</color>
+    <color name="primaryContainer">#B2DFDB</color>
+    <color name="onPrimaryContainer">#004D40</color>
+
+    <!-- Secondary/Accent Colors (Deep Orange) -->
+    <color name="secondary">#D84315</color>
+    <color name="onSecondary">#FFFFFF</color>
+    <color name="secondaryContainer">#FFCCBC</color>
+    <color name="onSecondaryContainer">#BF360C</color>
+
+    <!-- Neutral Surface and Background Colors -->
+    <color name="background">#F5F5F5</color>
+    <color name="onBackground">#1C1B1F</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="onSurface">#1C1B1F</color>
+    <color name="surfaceVariant">#E0E0E0</color>
+    <color name="onSurfaceVariant">#424242</color>
+
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="highlight_color">#E0E0E0</color>
+
+    <!-- Special Highlight Color for UI feedback -->
+    <color name="item_highlight">#40009688</color> <!-- Teal with alpha transparency -->
+</resources>

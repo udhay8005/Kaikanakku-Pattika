@@ -1,0 +1,14 @@
+<resources>
+    <!-- Defines the user-facing text for the rounding mode options in settings. -->
+    <string-array name="rounding_mode_entries">
+        <item>Round</item>
+        <item>Truncate</item>
+    </string-array>
+
+    <!-- Defines the internal values corresponding to the rounding mode options. -->
+    <!-- These values are saved in the app's preferences. -->
+    <string-array name="rounding_mode_values">
+        <item>ROUND</item>
+        <item>TRUNCATE</item>
+    </string-array>
+</resources>

@@ -1,0 +1,97 @@
+<resources>
+    <string name="app_name">Kaikanakku Pattika</string>
+
+    <string name="title_history">History</string>
+    <string name="title_calculator">Unit Calculator</string>
+    <string name="title_settings">Settings</string>
+    <string name="title_help">Help</string>
+    <string name="title_about">About</string>
+    <string name="recent_history_title">Recent History</string>
+    <string name="recommendations_title">Quick Conversions</string>
+
+    <string name="mode_cm_to_kol">CM → Kol</string>
+    <string name="mode_kol_to_cm">Kol → CM</string>
+    <string name="hint_centimeters">Centimeters (cm)</string>
+    <string name="unit_kol">Kol</string>
+    <string name="unit_viral">Viral</string>
+    <string name="unit_cm">cm</string>
+    <string name="button_convert">Convert</string>
+    <string name="label_result">Result</string>
+
+    <string name="label_value_a">Value A</string>
+    <string name="label_value_b">Value B</string>
+    <string name="button_add">Add</string>
+    <string name="button_subtract">Subtract</string>
+
+    <string name="empty_history_message">No History Yet</string>
+    <string name="empty_history_prompt">Your conversions will appear here.</string>
+    <string name="action_search">Search</string>
+    <string name="action_sort">Sort</string>
+    <string name="sort_by_date">Sort by Date</string>
+    <string name="sort_by_size_asc">Sort by Size (Smallest First)</string>
+    <string name="sort_by_size_desc">Sort by Size (Largest First)</string>
+    <string name="action_export_csv">Export to CSV</string>
+    <string name="action_clear_all">Clear All History</string>
+    <string name="action_show_favorites">Show Favorites</string>
+    <string name="dialog_clear_history_title">Clear History?</string>
+    <string name="dialog_clear_history_message">Are you sure you want to permanently delete all entries? This cannot be undone.</string>
+    <string name="undo">Undo</string>
+    <string name="entry_deleted">Entry deleted</string>
+    <string name="result_copied">Result copied to clipboard</string>
+
+    <string name="settings_category_general">General</string>
+    <string name="settings_language_title">Language</string>
+    <string name="settings_language_summary">Change the app\'s display language</string>
+    <string name="settings_default_mode_title">Default Conversion Mode</string>
+    <string name="settings_default_mode_summary_cm_to_kol">App starts in CM to Kol mode</string>
+    <string name="settings_default_mode_summary_kol_to_cm">App starts in Kol to CM mode</string>
+    <string name="settings_category_conversion">Conversion</string>
+    <string name="settings_precision_title">Precision Mode</string>
+    <string name="settings_precision_summary">Allow decimal values for centimeter remainders</string>
+    <string name="settings_rounding_title">Rounding Mode</string>
+    <string name="settings_rounding_summary">How to handle decimals when Precision is OFF</string>
+    <string name="settings_category_data">Data Management</string>
+    <string name="settings_auto_delete_title">Auto-delete old entries</string>
+    <string name="settings_auto_delete_summary">Automatically remove entries older than %d days</string>
+    <string name="settings_auto_delete_disabled">Disabled</string>
+    <string name="settings_reset_title">Reset to Defaults</string>
+    <string name="settings_reset_summary">Restore all settings to their original state</string>
+
+    <string name="developed_by">Developed by UdhayaChandra</string>
+    <string name="about_version_format">Version %s</string>
+    <string name="version_unknown">Version unknown</string>
+
+    <string name="help_content"><b>Welcome to Kaikanakku Pattika!</b>\n\nThis app helps you convert between the modern Metric system (centimeters) and the traditional Kerala system of \'Kol\' and \'Viral\'.\n\n<b>Features:</b>\n\n<b>Converter:</b> Use the switch at the top to select your conversion direction. Enter a value and press Convert. All conversions are saved automatically.\n\n<b>Calculator:</b> Add or subtract two different measurements in the traditional system. All calculations are saved automatically.\n\n<b>History:</b> Every conversion and calculation is saved. You can search, sort, favorite, and delete entries. Swipe an entry to delete it. Tap an entry to copy the result. Use the \'Re-use\' button to send a history item back to the converter.\n\n<b>Settings:</b> Customize the app\'s behavior, such as precision, rounding, and data management.</string>
+
+    <string name="content_desc_favorite">Mark as favorite</string>
+    <string name="content_desc_reuse">Re-use this value in the converter</string>
+
+    <string name="error_negative_input">Input value cannot be negative.</string>
+    <string name="error_conversion_failed">An error occurred during conversion.</string>
+    <string name="status_saved_to_history">Result saved to history.</string>
+    <string name="error_b_greater_than_a">Result cannot be negative (Value B is larger than Value A).</string>
+    <string name="error_invalid_number_format">Invalid number format entered.</string>
+    <string name="error_invalid_viral_input">Viral value cannot be greater than 23.</string>
+    <string name="error_invalid_kol_cm_input">CM value must be less than 3 for Kol conversion.</string>
+    <string name="history_empty_for_export">History is empty, nothing to export.</string>
+    <string name="history_exported_successfully">History exported successfully.</string>
+    <string name="share_csv_title">Share CSV File</string>
+    <string name="error_exporting_csv">Error exporting CSV.</string>
+    <string name="action_share">Share</string>
+    <string name="clipboard_label">Kaikanakku Result</string>
+    <string name="error_no_result_to_save">No result to save.</string>
+
+    <string name="settings_reset_dialog_title">Reset Settings?</string>
+    <string name="settings_reset_dialog_message">Are you sure you want to restore all settings to their original state? This action cannot be undone.</string>
+    <string name="settings_reset_dialog_positive">Reset</string>
+    <string name="cancel">Cancel</string>
+
+    <string-array name="language_entries">
+        <item>English</item>
+        <item>Malayalam</item>
+    </string-array>
+    <string-array name="language_values">
+        <item>en</item>
+        <item>ml</item>
+    </string-array>
+</resources>
