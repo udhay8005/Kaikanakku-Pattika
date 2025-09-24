@@ -3,6 +3,8 @@ package in.udhaya.kaikanakku.ui.history;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -17,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SearchView;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -26,6 +29,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -39,12 +45,13 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnHistor
     private RecyclerView recyclerView;
     private LinearLayout emptyView;
     private HistoryAdapter adapter;
+    private boolean favoritesVisible = false;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_history, container, false);
-        setHasOptionsMenu(true); // This fragment has its own options menu
+        setHasOptionsMenu(true);
         return root;
     }
 
@@ -136,15 +143,26 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnHistor
         } else if (itemId == R.id.action_clear_all) {
             showClearAllConfirmationDialog();
             return true;
+        } else if (itemId == R.id.action_export_csv) {
+            exportHistoryToCsv();
+            return true;
+        } else if (itemId == R.id.action_show_favorites) {
+            favoritesVisible = !favoritesVisible;
+            item.setChecked(favoritesVisible);
+            historyViewModel.toggleFavoritesFilter(favoritesVisible);
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onFavoriteClicked(HistoryEntry entry) {
-        // Create a new entry object to satisfy DiffUtil, as the original object is mutated.
         entry.setFavorite(!entry.isFavorite());
         historyViewModel.update(entry);
+        if (entry.isFavorite()) {
+            historyViewModel.delete(entry);
+            Snackbar.make(requireView(), "Moved to favorites", Snackbar.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -154,9 +172,8 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnHistor
         clipboard.setPrimaryClip(clip);
         Snackbar.make(requireView(), R.string.result_copied, Snackbar.LENGTH_SHORT).show();
 
-        // Trigger visual feedback
         adapter.showCopyHighlight(position);
-        new Handler(Looper.getMainLooper()).postDelayed(() -> adapter.clearCopyHighlight(), 500); // 500ms highlight
+        new Handler(Looper.getMainLooper()).postDelayed(() -> adapter.clearCopyHighlight(), 500);
     }
 
     @Override
@@ -165,13 +182,10 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnHistor
         String inputText = entry.getInputText();
 
         if (inputText.contains("cm") && !inputText.contains("kol")) {
-            // This was a CM -> Kol conversion
             args.putBoolean("IS_KOL_TO_CM", false);
             args.putDouble("CM_TOTAL", entry.getTotalCm());
         } else {
-            // This was a Kol -> CM conversion or a calculation
             args.putBoolean("IS_KOL_TO_CM", true);
-            // Use regex to parse the Kol, Viral, and CM values from the input string
             Pattern p = Pattern.compile("(\\d+)\\s*kol|(\\d+)\\s*viral|(\\d*\\.?\\d+)\\s*cm");
             Matcher m = p.matcher(inputText);
             int kol = 0;
@@ -187,7 +201,6 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnHistor
             args.putDouble("CM", cm);
         }
 
-        // Navigate back to the converter fragment with the pre-filled values
         NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
         navController.navigate(R.id.converterFragment, args);
     }
@@ -200,5 +213,43 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnHistor
                 .setNegativeButton(android.R.string.cancel, null)
                 .setIcon(R.drawable.ic_delete_forever)
                 .show();
+    }
+
+    private void exportHistoryToCsv() {
+        historyViewModel.getFilteredHistory().observe(getViewLifecycleOwner(), historyEntries -> {
+            if (historyEntries == null || historyEntries.isEmpty()) {
+                Snackbar.make(requireView(), R.string.history_empty_for_export, Snackbar.LENGTH_SHORT).show();
+                return;
+            }
+
+            StringBuilder csvContent = new StringBuilder("Input,Output,Is Favorite\n");
+            for (HistoryEntry entry : historyEntries) {
+                csvContent.append(String.format("\"%s\",\"%s\",%s\n",
+                        entry.getInputText(),
+                        entry.getOutputText(),
+                        entry.isFavorite()));
+            }
+
+            try {
+                File path = new File(requireContext().getCacheDir(), "exports");
+                if (!path.exists()) {
+                    path.mkdirs();
+                }
+                File file = new File(path, "history.csv");
+                FileOutputStream stream = new FileOutputStream(file);
+                stream.write(csvContent.toString().getBytes());
+                stream.close();
+
+                Uri uri = FileProvider.getUriForFile(requireContext(), "in.udhaya.kaikanakku.fileprovider", file);
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/csv");
+                intent.putExtra(Intent.EXTRA_STREAM, uri);
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                startActivity(Intent.createChooser(intent, "Export History"));
+
+            } catch (IOException e) {
+                Snackbar.make(requireView(), "Failed to export history", Snackbar.LENGTH_SHORT).show();
+            }
+        });
     }
 }

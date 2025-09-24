@@ -3,10 +3,8 @@ package in.udhaya.kaikanakku.ui.settings;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
-
 import androidx.preference.ListPreference;
 import androidx.preference.PreferenceFragmentCompat;
-
 import in.udhaya.kaikanakku.R;
 import in.udhaya.kaikanakku.data.repository.SettingsRepository;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -27,12 +25,14 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         ListPreference languagePreference = findPreference("language");
         if (languagePreference != null) {
             languagePreference.setOnPreferenceChangeListener((preference, newValue) -> {
-                // FIX: Added a complete subscription with error handling.
                 settingsRepository.updateLanguage((String) newValue)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
-                                () -> Log.d(TAG, "Language updated successfully."),
+                                () -> {
+                                    Log.d(TAG, "Language updated successfully.");
+                                    requireActivity().recreate();
+                                },
                                 throwable -> Log.e(TAG, "Failed to update language", throwable)
                         );
                 return true;
@@ -43,7 +43,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         ListPreference roundingPreference = findPreference("rounding_mode");
         if (roundingPreference != null) {
             roundingPreference.setOnPreferenceChangeListener((preference, newValue) -> {
-                // FIX: Added a complete subscription with error handling.
                 settingsRepository.updateRoundingMode((String) newValue)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
