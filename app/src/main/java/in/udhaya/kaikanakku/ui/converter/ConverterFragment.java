@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
@@ -62,6 +63,7 @@ public class ConverterFragment extends Fragment {
         setupRecentHistory();
         observeViewModel();
         handleArguments();
+        setupInputValidation();
     }
 
     private void initializeViews(@NonNull View view) {
@@ -104,7 +106,7 @@ public class ConverterFragment extends Fragment {
                 } else { // CM to Kol
                     String cmText = Objects.requireNonNull(cmInput.getText()).toString();
                     if(cmText.isEmpty()){
-                        Snackbar.make(requireView(), "Please enter a value.", Snackbar.LENGTH_SHORT).show();
+                        viewModel.convertCmToKol(0);
                         return;
                     }
                     double cm = Double.parseDouble(cmText);
@@ -142,8 +144,7 @@ public class ConverterFragment extends Fragment {
 
     private void setupRecentHistory() {
         recentHistoryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        // Use the main HistoryAdapter. A separate listener can be created if different interactions are needed.
-        recentHistoryAdapter = new HistoryAdapter(null); // Passing null as interactions are not needed here
+        recentHistoryAdapter = new HistoryAdapter(null);
         recentHistoryRecyclerView.setAdapter(recentHistoryAdapter);
     }
 
@@ -158,7 +159,7 @@ public class ConverterFragment extends Fragment {
         viewModel.getError().observe(getViewLifecycleOwner(), error -> {
             if (error != null && !error.isEmpty()) {
                 Snackbar.make(requireView(), error, Snackbar.LENGTH_LONG).show();
-                viewModel.clearError(); // Clear error after showing it
+                viewModel.clearError();
             }
         });
 
@@ -169,10 +170,6 @@ public class ConverterFragment extends Fragment {
         });
     }
 
-    /**
-     * Checks for arguments passed from other fragments (e.g., HistoryFragment's "re-use" button)
-     * and pre-fills the UI.
-     */
     private void handleArguments() {
         Bundle args = getArguments();
         if (args != null) {
@@ -186,7 +183,6 @@ public class ConverterFragment extends Fragment {
             } else {
                 cmInput.setText(String.valueOf(args.getDouble("CM_TOTAL", 0.0)));
             }
-            // Automatically trigger conversion
             convertButton.performClick();
         }
     }
@@ -200,5 +196,29 @@ public class ConverterFragment extends Fragment {
         resultCard.setVisibility(View.GONE);
         resultText.setText("");
         viewModel.clearError();
+    }
+
+    private void setupInputValidation() {
+        addDecimalValidation(cmInput);
+        addDecimalValidation(kolCmInput);
+    }
+
+    private void addDecimalValidation(EditText editText) {
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String text = s.toString();
+                if (text.indexOf('.') != text.lastIndexOf('.')) {
+                    editText.setText(text.substring(0, text.length() - 1));
+                    editText.setSelection(editText.length());
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
     }
 }

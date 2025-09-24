@@ -60,6 +60,7 @@ public class CalculatorFragment extends Fragment {
         setupObservers();
         setupInputAutoAdvance();
         setupTabLayout();
+        setupInputValidation();
     }
 
     /**
@@ -253,7 +254,7 @@ public class CalculatorFragment extends Fragment {
             try {
                 String multiplierStr = multiplierInput.getText().toString();
                 if (TextUtils.isEmpty(multiplierStr)) {
-                    Snackbar.make(requireView(), R.string.error_invalid_multiplier, Snackbar.LENGTH_LONG).show();
+                    viewModel.calculate(operation, measurement, 0);
                     return;
                 }
                 multiplier = Double.parseDouble(multiplierStr);
@@ -322,5 +323,31 @@ public class CalculatorFragment extends Fragment {
         }
 
         return new CalculatorUtils.Measurement(kol, viral, cm);
+    }
+
+    private void setupInputValidation() {
+        addDecimalValidation(cmInputA);
+        addDecimalValidation(cmInputB);
+        addDecimalValidation(cmInputMultiply);
+        addDecimalValidation(multiplierInput);
+    }
+
+    private void addDecimalValidation(EditText editText) {
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String text = s.toString();
+                if (text.indexOf('.') != text.lastIndexOf('.')) {
+                    editText.setText(text.substring(0, text.length() - 1));
+                    editText.setSelection(editText.length());
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
     }
 }
