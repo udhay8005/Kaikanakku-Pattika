@@ -18,6 +18,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputEditText;
@@ -28,11 +30,6 @@ import java.util.Objects;
 import in.udhaya.kaikanakku.R;
 import in.udhaya.kaikanakku.ui.history.HistoryAdapter;
 
-/**
- * The main user interface for the converter feature. This fragment handles user input,
- * displays results, and observes a ConverterViewModel for state and business logic.
- * It now includes features like auto-saving, recent history display, and streamlined input.
- */
 public class ConverterFragment extends Fragment {
 
     private ConverterViewModel viewModel;
@@ -44,6 +41,7 @@ public class ConverterFragment extends Fragment {
     private Button convertButton;
     private RecyclerView recentHistoryRecyclerView;
     private HistoryAdapter recentHistoryAdapter;
+    private ChipGroup recommendationChipGroup;
 
     @Nullable
     @Override
@@ -64,6 +62,7 @@ public class ConverterFragment extends Fragment {
         observeViewModel();
         handleArguments();
         setupInputValidation();
+        setupRecommendations();
     }
 
     private void initializeViews(@NonNull View view) {
@@ -78,6 +77,7 @@ public class ConverterFragment extends Fragment {
         modeSwitch = view.findViewById(R.id.switch_mode);
         convertButton = view.findViewById(R.id.button_convert);
         recentHistoryRecyclerView = view.findViewById(R.id.recycler_view_recent_history);
+        recommendationChipGroup = view.findViewById(R.id.chip_group_recommendations);
     }
 
     private void setupModeSwitch() {
@@ -92,6 +92,7 @@ public class ConverterFragment extends Fragment {
                 modeSwitch.setText(R.string.mode_cm_to_kol);
             }
             clearInputsAndResult();
+            setupRecommendations(); // Update recommendations on mode change
         });
     }
 
@@ -164,8 +165,14 @@ public class ConverterFragment extends Fragment {
         });
 
         viewModel.getRecentHistory().observe(getViewLifecycleOwner(), historyEntries -> {
-            if (historyEntries != null) {
+            View fragmentView = getView(); // Get the root view of the fragment
+            if (fragmentView == null) return; // Exit if the view is not available
+
+            if (historyEntries != null && !historyEntries.isEmpty()) {
                 recentHistoryAdapter.submitList(historyEntries);
+                fragmentView.findViewById(R.id.layout_recent_history).setVisibility(View.VISIBLE);
+            } else {
+                fragmentView.findViewById(R.id.layout_recent_history).setVisibility(View.GONE);
             }
         });
     }
@@ -186,7 +193,6 @@ public class ConverterFragment extends Fragment {
             convertButton.performClick();
         }
     }
-
 
     private void clearInputsAndResult() {
         cmInput.setText("");
@@ -221,4 +227,32 @@ public class ConverterFragment extends Fragment {
             public void afterTextChanged(Editable s) {}
         });
     }
+
+    private void setupRecommendations() {
+        recommendationChipGroup.removeAllViews();
+        String[] recommendations;
+        if (modeSwitch.isChecked()) { // Kol -> CM
+            recommendations = new String[]{"1 Kol", "5 Kol", "10 Kol", "25 Kol","50 Kol"};
+        } else { // CM -> Kol
+            recommendations = new String[]{"100 cm", "250 cm","414 cm", "500 cm", "1000 cm"};
+        }
+
+        for (String recommendation : recommendations) {
+            Chip chip = (Chip) getLayoutInflater().inflate(R.layout.item_recommendation_chip, recommendationChipGroup, false);
+            chip.setText(recommendation);
+            chip.setOnClickListener(v -> {
+                String text = ((Chip) v).getText().toString();
+                if (text.endsWith("cm")) {
+                    cmInput.setText(text.replace(" cm", ""));
+                } else {
+                    kolInput.setText(text.replace(" Kol", ""));
+                    viralInput.setText("");
+                    kolCmInput.setText("");
+                }
+                convertButton.performClick();
+            });
+            recommendationChipGroup.addView(chip);
+        }
+    }
 }
+
