@@ -59,4 +59,13 @@ public interface HistoryDao {
      */
     @Query("SELECT * FROM history_table ORDER BY timestamp DESC LIMIT :limit")
     Flowable<List<HistoryEntry>> getRecentEntries(int limit);
+
+    /**
+     * Checks if a history entry with the given input and output text already exists.
+     * @param inputText The input text to check.
+     * @param outputText The output text to check.
+     * @return The number of existing entries with the same input and output text.
+     */
+    @Query("SELECT COUNT(*) FROM history_table WHERE inputText = :inputText AND outputText = :outputText")
+    int entryExists(String inputText, String outputText);
 }

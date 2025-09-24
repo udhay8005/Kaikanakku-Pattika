@@ -93,16 +93,18 @@ public class CalculatorViewModel extends AndroidViewModel {
         String formattedResult = ConversionUtils.cmToKolFormatted(resultCm, true, false);
         result.setValue(formattedResult);
 
-        // Prepare the text for history logging.
-        String inputA = ConversionUtils.formatKolViralCmInput(a.kol, a.viral, a.cm);
-        String inputB = ConversionUtils.formatKolViralCmInput(b.kol, b.viral, b.cm);
+        if (cmA > 0 && cmB > 0) {
+            // Prepare the text for history logging.
+            String inputA = ConversionUtils.formatKolViralCmInput(a.kol, a.viral, a.cm);
+            String inputB = ConversionUtils.formatKolViralCmInput(b.kol, b.viral, b.cm);
 
-        lastInputText = "(" + inputA + ")" + operationSymbol + "(" + inputB + ")";
-        lastOutputText = formattedResult;
-        lastTotalCm = resultCm;
+            lastInputText = "(" + inputA + ")" + operationSymbol + "(" + inputB + ")";
+            lastOutputText = formattedResult;
+            lastTotalCm = resultCm;
 
-        // Automatically save the successful calculation.
-        saveLastResultToHistory();
+            // Automatically save the successful calculation.
+            saveLastResultToHistory();
+        }
     }
 
     /**
@@ -123,16 +125,23 @@ public class CalculatorViewModel extends AndroidViewModel {
             return;
         }
 
+        if (multiplier <= 0) {
+            error.setValue(getApplication().getString(R.string.error_invalid_multiplier));
+            return;
+        }
+
         double resultCm = cm * multiplier;
         String formattedResult = ConversionUtils.cmToKolFormatted(resultCm, true, false);
         result.setValue(formattedResult);
 
-        String inputText = ConversionUtils.formatKolViralCmInput(measurement.kol, measurement.viral, measurement.cm);
-        lastInputText = "(" + inputText + ") * " + multiplier;
-        lastOutputText = formattedResult;
-        lastTotalCm = resultCm;
+        if (cm > 0) {
+            String inputText = ConversionUtils.formatKolViralCmInput(measurement.kol, measurement.viral, measurement.cm);
+            lastInputText = "(" + inputText + ") * " + multiplier;
+            lastOutputText = formattedResult;
+            lastTotalCm = resultCm;
 
-        saveLastResultToHistory();
+            saveLastResultToHistory();
+        }
     }
 
     /**
@@ -140,9 +149,7 @@ public class CalculatorViewModel extends AndroidViewModel {
      * This is now called automatically after each successful calculation.
      */
     private void saveLastResultToHistory() {
-        if (lastInputText == null || lastOutputText == null) {
-            // This case should ideally not be reached with auto-save, but it's a safeguard.
-            error.setValue(getApplication().getString(R.string.error_no_result_to_save));
+        if (lastInputText == null || lastOutputText == null || lastInputText.trim().isEmpty() || lastOutputText.trim().isEmpty() || lastTotalCm == 0.0) {
             return;
         }
 

@@ -88,7 +88,11 @@ public class HistoryRepository {
     // do not run on the main thread.
 
     public void insert(HistoryEntry historyEntry) {
-        AppDatabase.databaseWriteExecutor.execute(() -> historyDao.insert(historyEntry));
+        AppDatabase.databaseWriteExecutor.execute(() -> {
+            if (historyDao.entryExists(historyEntry.getInputText(), historyEntry.getOutputText()) == 0) {
+                historyDao.insert(historyEntry);
+            }
+        });
     }
 
     public void update(HistoryEntry historyEntry) {

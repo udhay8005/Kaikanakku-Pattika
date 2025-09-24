@@ -55,7 +55,7 @@ public class ConverterViewModel extends AndroidViewModel {
     }
 
     public void convertCmToKol(double cmValue) {
-        if (cmValue <= 0) {
+        if (cmValue < 0) {
             error.setValue(getApplication().getString(R.string.error_negative_input));
             return;
         }
@@ -71,10 +71,12 @@ public class ConverterViewModel extends AndroidViewModel {
                         .subscribe(
                                 formattedResult -> {
                                     result.setValue(formattedResult);
-                                    lastInputText = String.format(Locale.US, "%.2f cm", cmValue);
-                                    lastOutputText = formattedResult;
-                                    lastTotalCm = cmValue;
-                                    saveLastConversionToHistory();
+                                    if (cmValue > 0) {
+                                        lastInputText = String.format(Locale.US, "%.2f cm", cmValue);
+                                        lastOutputText = formattedResult;
+                                        lastTotalCm = cmValue;
+                                        saveLastConversionToHistory();
+                                    }
                                 },
                                 throwable -> {
                                     error.setValue(getApplication().getString(R.string.error_conversion_failed));
@@ -84,7 +86,7 @@ public class ConverterViewModel extends AndroidViewModel {
     }
 
     public void convertKolToCm(int kol, int viral, double cm) {
-        if (kol <= 0 && viral <= 0 && cm <= 0) {
+        if (kol < 0 || viral < 0 || cm < 0) {
             error.setValue(getApplication().getString(R.string.error_negative_input));
             return;
         }
@@ -103,14 +105,16 @@ public class ConverterViewModel extends AndroidViewModel {
 
         result.setValue(formattedResult);
 
-        lastInputText = ConversionUtils.formatKolViralCmInput(kol, viral, cm);
-        lastOutputText = formattedResult;
-        lastTotalCm = totalCm;
-        saveLastConversionToHistory();
+        if (totalCm > 0) {
+            lastInputText = ConversionUtils.formatKolViralCmInput(kol, viral, cm);
+            lastOutputText = formattedResult;
+            lastTotalCm = totalCm;
+            saveLastConversionToHistory();
+        }
     }
 
     private void saveLastConversionToHistory() {
-        if (lastInputText == null || lastOutputText == null || lastInputText.trim().isEmpty() || lastOutputText.trim().isEmpty()) {
+        if (lastInputText == null || lastOutputText == null || lastInputText.trim().isEmpty() || lastOutputText.trim().isEmpty() || lastTotalCm == 0.0) {
             return;
         }
 
