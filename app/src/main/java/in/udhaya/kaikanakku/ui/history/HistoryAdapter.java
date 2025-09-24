@@ -12,7 +12,12 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+
 import in.udhaya.kaikanakku.R;
 import in.udhaya.kaikanakku.data.db.HistoryEntry;
 
@@ -104,6 +109,7 @@ public class HistoryAdapter extends ListAdapter<HistoryEntry, HistoryAdapter.His
     class HistoryViewHolder extends RecyclerView.ViewHolder {
         private final TextView inputText;
         private final TextView outputText;
+        private final TextView timestampText;
         private final ImageButton favoriteButton;
         private final ImageButton reuseButton;
 
@@ -111,6 +117,7 @@ public class HistoryAdapter extends ListAdapter<HistoryEntry, HistoryAdapter.His
             super(itemView);
             inputText = itemView.findViewById(R.id.text_view_input);
             outputText = itemView.findViewById(R.id.text_view_output);
+            timestampText = itemView.findViewById(R.id.text_view_timestamp);
             favoriteButton = itemView.findViewById(R.id.button_favorite);
             reuseButton = itemView.findViewById(R.id.button_reuse);
         }
@@ -122,6 +129,10 @@ public class HistoryAdapter extends ListAdapter<HistoryEntry, HistoryAdapter.His
         public void bind(final HistoryEntry entry) {
             inputText.setText(entry.getInputText());
             outputText.setText(entry.getOutputText());
+
+            // Format and display the timestamp.
+            SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy 'at' h:mm a", Locale.getDefault());
+            timestampText.setText(sdf.format(new Date(entry.getTimestamp())));
 
             if (entry.isFavorite()) {
                 favoriteButton.setImageResource(R.drawable.ic_star_filled);

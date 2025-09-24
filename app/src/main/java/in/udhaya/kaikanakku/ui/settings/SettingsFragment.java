@@ -4,7 +4,9 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import androidx.preference.ListPreference;
+import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.SeekBarPreference;
 import in.udhaya.kaikanakku.R;
 import in.udhaya.kaikanakku.data.repository.SettingsRepository;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -50,6 +52,20 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                                 () -> Log.d(TAG, "Rounding mode updated successfully."),
                                 throwable -> Log.e(TAG, "Failed to update rounding mode", throwable)
                         );
+                return true;
+            });
+        }
+
+        // --- Auto-delete Preference ---
+        SeekBarPreference autoDeletePreference = findPreference("auto_delete_days");
+        if (autoDeletePreference != null) {
+            autoDeletePreference.setOnPreferenceChangeListener((preference, newValue) -> {
+                int days = (Integer) newValue;
+                if (days > 0) {
+                    preference.setSummary(getString(R.string.settings_auto_delete_summary, days));
+                } else {
+                    preference.setSummary(getString(R.string.settings_auto_delete_disabled));
+                }
                 return true;
             });
         }
