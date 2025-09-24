@@ -20,8 +20,12 @@
 
     <string name="label_value_a">Value A</string>
     <string name="label_value_b">Value B</string>
+    <string name="label_value">Value</string>
+    <string name="label_multiplier">Multiplier</string>
     <string name="button_add">Add</string>
     <string name="button_subtract">Subtract</string>
+    <string name="button_add_subtract">Add/Subtract</string>
+    <string name="button_multiply">Multiply</string>
 
     <string name="empty_history_message">No History Yet</string>
     <string name="empty_history_prompt">Your conversions will appear here.</string>
@@ -73,6 +77,7 @@
     <string name="error_invalid_number_format">Invalid number format entered.</string>
     <string name="error_invalid_viral_input">Viral value cannot be greater than 23.</string>
     <string name="error_invalid_kol_cm_input">CM value must be less than 3 for Kol conversion.</string>
+    <string name="error_invalid_multiplier">Invalid multiplier entered.</string>
     <string name="history_empty_for_export">History is empty, nothing to export.</string>
     <string name="history_exported_successfully">History exported successfully.</string>
     <string name="share_csv_title">Share CSV File</string>

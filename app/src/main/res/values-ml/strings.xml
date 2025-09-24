@@ -20,8 +20,12 @@
 
     <string name="label_value_a">മൂല്യം A</string>
     <string name="label_value_b">മൂല്യം B</string>
+    <string name="label_value">മൂല്യം</string>
+    <string name="label_multiplier">ഗുണനം</string>
     <string name="button_add">കൂട്ടുക</string>
     <string name="button_subtract">കുറയ്ക്കുക</string>
+    <string name="button_add_subtract">കൂട്ടുക/കുറയ്ക്കുക</string>
+    <string name="button_multiply">ഗുണിക്കുക</string>
 
     <string name="empty_history_message">ചരിത്രം ലഭ്യമല്ല</string>
     <string name="empty_history_prompt">നിങ്ങളുടെ പരിവർത്തനങ്ങൾ ഇവിടെ ദൃശ്യമാകും.</string>
@@ -74,6 +78,7 @@
     <string name="error_invalid_number_format">അസാധുവായ നമ്പർ ഫോർമാറ്റ് നൽകി.</string>
     <string name="error_invalid_viral_input">വിരൽ മൂല്യം 23-ൽ കൂടരുത്.</string>
     <string name="error_invalid_kol_cm_input">കോൽ പരിവർത്തനത്തിന് സിഎം മൂല്യം 3-ൽ കുറവായിരിക്കണം.</string>
+    <string name="error_invalid_multiplier">അസാധുവായ ഗുണനം നൽകി.</string>
     <string name="history_empty_for_export">ചരിത്രം ശൂന്യമാണ്, എക്സ്പോർട്ട് ചെയ്യാൻ ഒന്നുമില്ല.</string>
     <string name="history_exported_successfully">ചരിത്രം വിജയകരമായി എക്സ്പോർട്ട് ചെയ്തു.</string>
     <string name="share_csv_title">CSV ഫയൽ പങ്കിടുക</string>

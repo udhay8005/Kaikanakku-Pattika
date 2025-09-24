@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,11 +17,12 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.tabs.TabLayout;
 import in.udhaya.kaikanakku.R;
 import in.udhaya.kaikanakku.util.CalculatorUtils;
 
 /**
- * A fragment that provides a UI for users to perform addition and subtraction on two
+ * A fragment that provides a UI for users to perform addition, subtraction, and multiplication on
  * measurements in the Kol/Viral/cm system. It handles user input, validation,
  * and delegates calculation logic to the CalculatorViewModel.
  */
@@ -29,9 +31,13 @@ public class CalculatorFragment extends Fragment {
     private CalculatorViewModel viewModel;
     private EditText kolInputA, viralInputA, cmInputA;
     private EditText kolInputB, viralInputB, cmInputB;
-    private Button addButton, subtractButton;
+    private EditText kolInputMultiply, viralInputMultiply, cmInputMultiply;
+    private EditText multiplierInput;
+    private Button addButton, subtractButton, multiplyButton;
     private CardView resultCard;
     private TextView resultTextView;
+    private TabLayout tabLayout;
+    private LinearLayout addSubtractLayout, multiplyLayout;
 
     public CalculatorFragment() {
         // Required empty public constructor
@@ -53,6 +59,7 @@ public class CalculatorFragment extends Fragment {
         setupClickListeners();
         setupObservers();
         setupInputAutoAdvance();
+        setupTabLayout();
     }
 
     /**
@@ -70,18 +77,29 @@ public class CalculatorFragment extends Fragment {
         viralInputB = inputsB.findViewById(R.id.edit_text_viral);
         cmInputB = inputsB.findViewById(R.id.edit_text_cm);
 
+        View inputsMultiply = view.findViewById(R.id.inputs_multiply);
+        kolInputMultiply = inputsMultiply.findViewById(R.id.edit_text_kol);
+        viralInputMultiply = inputsMultiply.findViewById(R.id.edit_text_viral);
+        cmInputMultiply = inputsMultiply.findViewById(R.id.edit_text_cm);
+        multiplierInput = view.findViewById(R.id.edit_text_multiplier);
+
         addButton = view.findViewById(R.id.button_add);
         subtractButton = view.findViewById(R.id.button_subtract);
+        multiplyButton = view.findViewById(R.id.button_multiply);
         resultCard = view.findViewById(R.id.card_result);
         resultTextView = view.findViewById(R.id.text_view_calc_result);
+        tabLayout = view.findViewById(R.id.tab_layout);
+        addSubtractLayout = view.findViewById(R.id.add_subtract_layout);
+        multiplyLayout = view.findViewById(R.id.multiply_layout);
     }
 
     /**
-     * Sets up the click listeners for the Add and Subtract buttons.
+     * Sets up the click listeners for the Add, Subtract and Multiply buttons.
      */
     private void setupClickListeners() {
         addButton.setOnClickListener(v -> performCalculation(CalculatorViewModel.Operation.ADD));
         subtractButton.setOnClickListener(v -> performCalculation(CalculatorViewModel.Operation.SUBTRACT));
+        multiplyButton.setOnClickListener(v -> performCalculation(CalculatorViewModel.Operation.MULTIPLY));
     }
 
     /**
@@ -168,6 +186,56 @@ public class CalculatorFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {}
         });
+
+        // For Multiply
+        kolInputMultiply.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() == 4) { // Max length for Kol
+                    viralInputMultiply.requestFocus();
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
+        viralInputMultiply.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() == 2) { // Max length for Viral
+                    cmInputMultiply.requestFocus();
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+    }
+
+    private void setupTabLayout() {
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (tab.getPosition() == 0) {
+                    addSubtractLayout.setVisibility(View.VISIBLE);
+                    multiplyLayout.setVisibility(View.GONE);
+                } else {
+                    addSubtractLayout.setVisibility(View.GONE);
+                    multiplyLayout.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
+        });
     }
 
     /**
@@ -177,13 +245,34 @@ public class CalculatorFragment extends Fragment {
     private void performCalculation(CalculatorViewModel.Operation operation) {
         resultCard.setVisibility(View.GONE);
 
-        CalculatorUtils.Measurement measurementA = readAndValidateMeasurement(kolInputA, viralInputA, cmInputA);
-        if (measurementA == null) return; // Validation failed
+        if (operation == CalculatorViewModel.Operation.MULTIPLY) {
+            CalculatorUtils.Measurement measurement = readAndValidateMeasurement(kolInputMultiply, viralInputMultiply, cmInputMultiply);
+            if (measurement == null) return; // Validation failed
 
-        CalculatorUtils.Measurement measurementB = readAndValidateMeasurement(kolInputB, viralInputB, cmInputB);
-        if (measurementB == null) return; // Validation failed
+            double multiplier;
+            try {
+                String multiplierStr = multiplierInput.getText().toString();
+                if (TextUtils.isEmpty(multiplierStr)) {
+                    Snackbar.make(requireView(), R.string.error_invalid_multiplier, Snackbar.LENGTH_LONG).show();
+                    return;
+                }
+                multiplier = Double.parseDouble(multiplierStr);
+            } catch (NumberFormatException e) {
+                Snackbar.make(requireView(), R.string.error_invalid_multiplier, Snackbar.LENGTH_LONG).show();
+                return;
+            }
 
-        viewModel.calculate(operation, measurementA, measurementB);
+            viewModel.calculate(operation, measurement, multiplier);
+
+        } else {
+            CalculatorUtils.Measurement measurementA = readAndValidateMeasurement(kolInputA, viralInputA, cmInputA);
+            if (measurementA == null) return; // Validation failed
+
+            CalculatorUtils.Measurement measurementB = readAndValidateMeasurement(kolInputB, viralInputB, cmInputB);
+            if (measurementB == null) return; // Validation failed
+
+            viewModel.calculate(operation, measurementA, measurementB);
+        }
     }
 
     /**

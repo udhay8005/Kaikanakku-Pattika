@@ -5,7 +5,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import com.google.android.material.snackbar.Snackbar;
 import in.udhaya.kaikanakku.R;
 import in.udhaya.kaikanakku.data.db.HistoryEntry;
 import in.udhaya.kaikanakku.data.repository.HistoryRepository;
@@ -21,7 +20,8 @@ public class CalculatorViewModel extends AndroidViewModel {
 
     public enum Operation {
         ADD,
-        SUBTRACT
+        SUBTRACT,
+        MULTIPLY
     }
 
     private final HistoryRepository historyRepository;
@@ -102,6 +102,36 @@ public class CalculatorViewModel extends AndroidViewModel {
         lastTotalCm = resultCm;
 
         // Automatically save the successful calculation.
+        saveLastResultToHistory();
+    }
+
+    /**
+     * Performs the multiplication on a measurement.
+     *
+     * @param operation The operation to perform (MULTIPLY).
+     * @param measurement The measurement to be multiplied.
+     * @param multiplier The multiplier.
+     */
+    public void calculate(Operation operation, CalculatorUtils.Measurement measurement, double multiplier) {
+        if (operation != Operation.MULTIPLY) {
+            return;
+        }
+
+        double cm = ConversionUtils.kolToCm(measurement.kol, measurement.viral, measurement.cm);
+        if (cm < 0) {
+            error.setValue(getApplication().getString(R.string.error_negative_input));
+            return;
+        }
+
+        double resultCm = cm * multiplier;
+        String formattedResult = ConversionUtils.cmToKolFormatted(resultCm, true, false);
+        result.setValue(formattedResult);
+
+        String inputText = ConversionUtils.formatKolViralCmInput(measurement.kol, measurement.viral, measurement.cm);
+        lastInputText = "(" + inputText + ") * " + multiplier;
+        lastOutputText = formattedResult;
+        lastTotalCm = resultCm;
+
         saveLastResultToHistory();
     }
 
