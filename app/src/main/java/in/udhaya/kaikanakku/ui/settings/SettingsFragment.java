@@ -3,6 +3,7 @@ package in.udhaya.kaikanakku.ui.settings;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
+import androidx.appcompat.app.AlertDialog;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
@@ -69,5 +70,36 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 return true;
             });
         }
+
+        // --- Reset Settings Preference ---
+        Preference resetPreference = findPreference("reset_settings");
+        if (resetPreference != null) {
+            resetPreference.setOnPreferenceClickListener(preference -> {
+                showResetConfirmationDialog(settingsRepository);
+                return true;
+            });
+        }
+    }
+
+    @SuppressLint("CheckResult")
+    private void showResetConfirmationDialog(SettingsRepository settingsRepository) {
+        new AlertDialog.Builder(requireContext())
+                .setTitle(R.string.settings_reset_dialog_title)
+                .setMessage(R.string.settings_reset_dialog_message)
+                .setPositiveButton(R.string.settings_reset_dialog_positive, (dialog, which) -> {
+                    settingsRepository.resetAllPreferences()
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(
+                                    () -> {
+                                        Log.d(TAG, "All settings have been reset.");
+                                        // Recreate the activity to apply the default settings
+                                        requireActivity().recreate();
+                                    },
+                                    throwable -> Log.e(TAG, "Failed to reset settings", throwable)
+                            );
+                })
+                .setNegativeButton(R.string.cancel, null)
+                .show();
     }
 }
